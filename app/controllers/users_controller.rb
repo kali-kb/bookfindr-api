@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         @user.password = password
         if @user.save
         	# hmac_secret = Rails.application.credentials.dig(:development, :hmac_secret)
-    		hmac_secret = "token$ignature$ecret"
+    		hmac_secret = ENV['TOKEN_SECRET']
         	payload = { "user_id": @user.id, "email": @user.email }
         	jwt_token = JWT.encode(payload, hmac_secret, 'HS256')
     	    response.headers['Authorization'] = "Bearer #{jwt_token}"

@@ -7,8 +7,7 @@ class SessionsController < ApplicationController
 	        logger.info(user_params[:password])
 	        if BCrypt::Password.new(@user.password) == user_params[:password] 
 	        	# hmac_secret = Rails.application.credentials.hmac_secret.development!
-            	hmac_secret = "token$ignature$ecret"
-	        	logger.info(hmac_secret)
+            	hmac_secret = ENV['TOKEN_SECRET']
 	        	payload = { "user_id": @user.id, "username": @user.name, "email": @user.email }
 	        	jwt_token = JWT.encode(payload, hmac_secret, 'HS256')
 	    	    response.headers['Authorization'] = "Bearer #{jwt_token}"

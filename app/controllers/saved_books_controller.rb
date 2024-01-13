@@ -79,7 +79,7 @@ class SavedBooksController < ApplicationController
 	    	return nil unless token
 
 	    	begin
-	    		hmac_secret = "token$ignature$ecret"
+            	hmac_secret = ENV['TOKEN_SECRET']
 	      		# secret_key = Rails.application.secrets.secret_key_base
 	      		JWT.decode(token, hmac_secret, true, algorithm: 'HS256').first
 	    	rescue JWT::DecodeError
